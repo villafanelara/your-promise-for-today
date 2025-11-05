@@ -32,7 +32,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      margin-top: 55vh; /* <-- sube o baja el bloque modificando este valor */
+      margin-top: 55vh;
       opacity: 0;
       animation: fadeIn 2s ease-in forwards;
     }
@@ -71,30 +71,31 @@
     .buttons {
       margin-top: 1.5rem;
       display: flex;
-      gap: 1rem;
+      gap: 1.2rem;
       justify-content: center;
     }
 
     button {
       background: transparent;
-      border: 1px solid #fff;
-      color: #fff;
-      padding: 0.6rem 1.2rem;
-      border-radius: 30px;
-      font-size: 1rem;
+      border: none;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      opacity: 0.8;
     }
 
     button:hover {
-      background: rgba(255,255,255,0.1);
-      transform: scale(1.05);
+      transform: scale(1.1);
+      opacity: 1;
+    }
+
+    button img {
+      width: 32px;
+      height: 32px;
+      filter: grayscale(100%) brightness(100%);
     }
 
     @keyframes fadeIn {
-      to {
-        opacity: 1;
-      }
+      to { opacity: 1; }
     }
 
     @keyframes fadeInRef {
@@ -113,27 +114,11 @@
     }
 
     @media (max-width: 768px) {
-      h1 {
-        font-size: 1.2rem;
-      }
-
-      #verse {
-        font-size: 1.4rem;
-        max-width: 90%;
-      }
-
-      #reference {
-        font-size: 1rem;
-      }
-
-      button {
-        font-size: 0.9rem;
-        padding: 0.5rem 1rem;
-      }
-
-      .content {
-        margin-top: 45vh;
-      }
+      h1 { font-size: 1.2rem; }
+      #verse { font-size: 1.4rem; max-width: 90%; }
+      #reference { font-size: 1rem; }
+      button img { width: 28px; height: 28px; }
+      .content { margin-top: 45vh; }
     }
   </style>
 </head>
@@ -143,8 +128,8 @@
     <p id="verse"></p>
     <p id="reference"></p>
     <div class="buttons">
-      <button onclick="newPromise()">🔁 Get another promise</button>
-      <button onclick="sharePromise()">📤 Share</button>
+      <button onclick="newPromise()"><img src="https://cdn-icons-png.flaticon.com/512/2976/2976286.png" alt="New Promise"></button>
+      <button onclick="sharePromise()"><img src="https://cdn-icons-png.flaticon.com/512/929/929610.png" alt="Share"></button>
     </div>
   </div>
 
