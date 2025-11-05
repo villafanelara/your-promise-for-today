@@ -5,12 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>God’s Promise for Today</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
+    * { margin:0; padding:0; box-sizing:border-box; }
     body {
       background: url('Inicio.png') no-repeat center center;
       background-size: contain;
@@ -22,12 +17,11 @@
       align-items: flex-start;
       text-align: center;
     }
-
     .content {
       width: 100%;
       padding: 2rem;
       color: #fff;
-      text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.8);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -36,7 +30,6 @@
       opacity: 0;
       animation: fadeIn 2s ease-in forwards;
     }
-
     h1 {
       font-size: 1.5rem;
       font-weight: 400;
@@ -44,7 +37,6 @@
       letter-spacing: 1px;
       color: #e0e0e0;
     }
-
     #verse {
       font-size: 1.8rem;
       font-weight: bold;
@@ -55,10 +47,9 @@
       white-space: normal;
       overflow: hidden;
       word-wrap: break-word;
-      animation: typing 5s steps(60, end), blink-caret 0.8s step-end infinite;
+      animation: typing 5s steps(60,end), blink-caret 0.8s step-end infinite;
       min-height: 4em;
     }
-
     #reference {
       font-size: 1.2rem;
       color: #dcdcdc;
@@ -67,14 +58,12 @@
       animation: fadeInRef 1.5s ease-in forwards;
       animation-delay: 5s;
     }
-
     .buttons {
       margin-top: 1.5rem;
       display: flex;
       gap: 1.5rem;
       justify-content: center;
     }
-
     button {
       background: transparent;
       border: none;
@@ -82,56 +71,21 @@
       transition: transform 0.3s ease, opacity 0.3s ease;
       opacity: 0.9;
     }
+    button:hover { transform: scale(1.15); opacity: 1; }
+    button svg { width: 34px; height: 34px; fill: white; }
+    @keyframes fadeIn { to { opacity: 1; } }
+    @keyframes fadeInRef { from { opacity: 0; } to { opacity: 0.9; } }
+    @keyframes typing { from { width: 0 } to { width: 100% } }
+    @keyframes blink-caret { from,to { border-color: transparent } 50% { border-color: rgba(255,255,255,0.75); } }
 
-    button:hover {
-      transform: scale(1.15);
-      opacity: 1;
-    }
-
-    button svg {
-      width: 34px;
-      height: 34px;
-      fill: white;
-    }
-
-    @keyframes fadeIn {
-      to { opacity: 1; }
-    }
-
-    @keyframes fadeInRef {
-      from { opacity: 0; }
-      to { opacity: 0.9; }
-    }
-
-    @keyframes typing {
-      from { width: 0 }
-      to { width: 100% }
-    }
-
-    @keyframes blink-caret {
-      from, to { border-color: transparent }
-      50% { border-color: rgba(255,255,255,0.75); }
-    }
-
-    /* Versión móvil */
+    /* Móvil */
     @media (max-width: 768px) {
-      body {
-        background-size: cover;
-        background-position: center top;
-      }
-
-      .content {
-        margin-top: 45vh;
-        padding: 1rem;
-      }
-
-      h1 { font-size: 1.2rem; }
-
-      #verse { font-size: 1.4rem; max-width: 90%; }
-
-      #reference { font-size: 1rem; }
-
-      button svg { width: 28px; height: 28px; }
+      body { background-size: cover; background-position: center top; }
+      .content { margin-top: 45vh; padding:1rem; }
+      h1 { font-size:1.2rem; }
+      #verse { font-size:1.4rem; max-width:90%; }
+      #reference { font-size:1rem; }
+      button svg { width:28px; height:28px; }
     }
   </style>
 </head>
@@ -141,14 +95,12 @@
     <p id="verse"></p>
     <p id="reference"></p>
     <div class="buttons">
-      <!-- Icono de recargar -->
       <button onclick="newPromise()" aria-label="New Promise">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
           <path d="M21 12a9 9 0 1 1-9-9v2a7 7 0 1 0 7 7h2z"/>
           <path d="M21 3v6h-6"/>
         </svg>
       </button>
-      <!-- Icono de compartir -->
       <button onclick="sharePromise()" aria-label="Share">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
           <path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7"/>
@@ -175,12 +127,12 @@
       { text: "Take delight in the Lord, and he will give you the desires of your heart.", ref: "Psalm 37:4" },
       { text: "But those who hope in the Lord will renew their strength; they will soar on wings like eagles.", ref: "Isaiah 40:31" },
       { text: "May the God of hope fill you with all joy and peace as you trust in him.", ref: "Romans 15:13" },
-      { text: "For the Spirit God gave us does not make us timid, but gives us power, love and self-discipline.", ref: "2 Timothy 1:7" },
+      { text: "For God gave us a spirit not of fear but of power, love, and self-control.", ref: "2 Timothy 1:7" },
       { text: "He will cover you with his feathers, and under his wings you will find refuge.", ref: "Psalm 91:4" },
       { text: "Cast all your anxiety on him because he cares for you.", ref: "1 Peter 5:7" },
       { text: "Come to me, all you who are weary and burdened, and I will give you rest.", ref: "Matthew 11:28" },
       { text: "The Lord will keep you from all harm—he will watch over your life.", ref: "Psalm 121:7-8" },
-      { text: "The Lord will fight for you; you need only to be still.", ref: "Exodus 14:14" }
+      { text: "The Lord will fight for you; you need only to be still.", ref: "Exodus 14:14" },
       { text: "The Lord is close to the brokenhearted and saves those who are crushed in spirit.", ref: "Psalm 34:18" },
       { text: "I can do all things through Christ who strengthens me.", ref: "Philippians 4:13" },
       { text: "For God gave us a spirit not of fear but of power, love, and self-control.", ref: "2 Timothy 1:7" },
@@ -233,7 +185,7 @@
       { text: "Do not be afraid, little flock, for your Father has been pleased to give you the kingdom.", ref: "Luke 12:32" },
       { text: "Let the morning bring me word of your unfailing love, for I have put my trust in you.", ref: "Psalm 143:8" },
       { text: "Blessed is the man who trusts in the Lord, whose confidence is in him.", ref: "Jeremiah 17:7" }
-];
+    ];
 
     const verseEl = document.getElementById("verse");
     const refEl = document.getElementById("reference");
