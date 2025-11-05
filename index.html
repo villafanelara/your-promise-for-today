@@ -40,29 +40,34 @@
     h1 {
       font-size: 1.5rem;
       font-weight: 400;
-      margin-bottom: 1rem;
+      margin-bottom: 1.5rem;
       letter-spacing: 1px;
       color: #e0e0e0;
     }
 
-    p {
+    .verse {
       font-size: 1.8rem;
       font-weight: bold;
-      line-height: 1.4;
+      line-height: 1.5;
       max-width: 80%;
       color: #ffffff;
       border-right: 2px solid rgba(255,255,255,0.75);
-      white-space: nowrap;
+      white-space: normal; /* Permite saltos de línea */
       overflow: hidden;
-      animation:
-        typing 6s steps(60, end),
-        blink-caret 0.8s step-end infinite;
+      animation: typing 6s steps(60, end), blink-caret 0.8s step-end infinite;
+    }
+
+    .ref {
+      margin-top: 1rem;
+      font-size: 1.1rem;
+      color: #f0f0f0;
+      opacity: 0.9;
+      animation: fadeIn 2s ease-in forwards;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
     }
 
     @keyframes fadeIn {
-      to {
-        opacity: 1;
-      }
+      to { opacity: 1; }
     }
 
     @keyframes typing {
@@ -80,9 +85,13 @@
         font-size: 1.2rem;
       }
 
-      p {
+      .verse {
         font-size: 1.4rem;
         max-width: 90%;
+      }
+
+      .ref {
+        font-size: 1rem;
       }
     }
   </style>
@@ -90,66 +99,75 @@
 <body>
   <div class="content">
     <h1>This is your promise from God for today</h1>
-    <p id="verse"></p>
+    <div class="verse" id="verseText"></div>
+    <div class="ref" id="verseRef"></div>
   </div>
 
   <script>
-    const verses = [
-      "Jeremiah 29:11 – 'For I know the plans I have for you,' declares the Lord, 'plans to prosper you and not to harm you, plans to give you hope and a future.'",
-      "Isaiah 41:10 – 'Do not fear, for I am with you; do not be dismayed, for I am your God.'",
-      "Philippians 4:19 – 'And my God will meet all your needs according to the riches of his glory in Christ Jesus.'",
-      "Romans 8:28 – 'And we know that in all things God works for the good of those who love him.'",
-      "Psalm 23:1 – 'The Lord is my shepherd; I lack nothing.'",
-      "Deuteronomy 31:8 – 'The Lord himself goes before you and will be with you; he will never leave you nor forsake you.'",
-      "Joshua 1:9 – 'Be strong and courageous. Do not be afraid; do not be discouraged, for the Lord your God will be with you wherever you go.'",
-      "2 Corinthians 12:9 – 'My grace is sufficient for you, for my power is made perfect in weakness.'",
-      "Psalm 46:1 – 'God is our refuge and strength, an ever-present help in trouble.'",
-      "John 14:27 – 'Peace I leave with you; my peace I give you. Do not let your hearts be troubled and do not be afraid.'",
-      "Proverbs 3:5-6 – 'Trust in the Lord with all your heart and lean not on your own understanding.'",
-      "Psalm 37:4 – 'Take delight in the Lord, and he will give you the desires of your heart.'",
-      "Isaiah 40:31 – 'But those who hope in the Lord will renew their strength; they will soar on wings like eagles.'",
-      "Romans 15:13 – 'May the God of hope fill you with all joy and peace as you trust in him.'",
-      "2 Timothy 1:7 – 'For the Spirit God gave us does not make us timid, but gives us power, love and self-discipline.'",
-      "Psalm 91:4 – 'He will cover you with his feathers, and under his wings you will find refuge.'",
-      "1 Peter 5:7 – 'Cast all your anxiety on him because he cares for you.'",
-      "Matthew 11:28 – 'Come to me, all you who are weary and burdened, and I will give you rest.'",
-      "Psalm 121:7-8 – 'The Lord will keep you from all harm—he will watch over your life.'",
-      "Exodus 14:14 – 'The Lord will fight for you; you need only to be still.'",
-      "Psalm 34:10 – 'Those who seek the Lord lack no good thing.'",
-      "Lamentations 3:22-23 – 'His compassions never fail. They are new every morning; great is your faithfulness.'",
-      "John 8:36 – 'So if the Son sets you free, you will be free indeed.'",
-      "Isaiah 26:3 – 'You will keep in perfect peace those whose minds are steadfast, because they trust in you.'",
-      "Psalm 27:1 – 'The Lord is my light and my salvation—whom shall I fear?'",
-      "Philippians 4:13 – 'I can do all things through Christ who strengthens me.'",
-      "Psalm 100:5 – 'For the Lord is good and his love endures forever.'",
-      "Matthew 6:33 – 'But seek first his kingdom and his righteousness, and all these things will be given to you as well.'",
-      "James 1:5 – 'If any of you lacks wisdom, you should ask God, who gives generously to all without finding fault.'",
-      "Hebrews 13:5 – 'Never will I leave you; never will I forsake you.'",
-      "Psalm 55:22 – 'Cast your cares on the Lord and he will sustain you.'",
-      "Proverbs 16:3 – 'Commit to the Lord whatever you do, and he will establish your plans.'",
-      "Romans 5:8 – 'But God demonstrates his own love for us in this: While we were still sinners, Christ died for us.'",
-      "Psalm 119:105 – 'Your word is a lamp for my feet, a light on my path.'",
-      "Isaiah 54:10 – 'Though the mountains be shaken and the hills be removed, yet my unfailing love for you will not be shaken.'",
-      "1 Corinthians 10:13 – 'God is faithful; he will not let you be tempted beyond what you can bear.'",
-      "Psalm 91:11 – 'For he will command his angels concerning you to guard you in all your ways.'",
-      "John 16:33 – 'In this world you will have trouble. But take heart! I have overcome the world.'",
-      "2 Corinthians 9:8 – 'And God is able to bless you abundantly, so that in all things at all times... you will abound in every good work.'",
-      "Psalm 32:8 – 'I will instruct you and teach you in the way you should go; I will counsel you with my loving eye on you.'"
+    const promises = [
+      {t: "For I know the plans I have for you, declares the Lord, plans to prosper you and not to harm you, plans to give you hope and a future.", r: "Jeremiah 29:11"},
+      {t: "Do not fear, for I am with you; do not be dismayed, for I am your God.", r: "Isaiah 41:10"},
+      {t: "And my God will meet all your needs according to the riches of his glory in Christ Jesus.", r: "Philippians 4:19"},
+      {t: "And we know that in all things God works for the good of those who love him.", r: "Romans 8:28"},
+      {t: "The Lord is my shepherd; I lack nothing.", r: "Psalm 23:1"},
+      {t: "The Lord himself goes before you and will be with you; he will never leave you nor forsake you.", r: "Deuteronomy 31:8"},
+      {t: "Be strong and courageous. Do not be afraid; do not be discouraged, for the Lord your God will be with you wherever you go.", r: "Joshua 1:9"},
+      {t: "My grace is sufficient for you, for my power is made perfect in weakness.", r: "2 Corinthians 12:9"},
+      {t: "God is our refuge and strength, an ever-present help in trouble.", r: "Psalm 46:1"},
+      {t: "Peace I leave with you; my peace I give you. Do not let your hearts be troubled and do not be afraid.", r: "John 14:27"},
+      {t: "Trust in the Lord with all your heart and lean not on your own understanding.", r: "Proverbs 3:5-6"},
+      {t: "Take delight in the Lord, and he will give you the desires of your heart.", r: "Psalm 37:4"},
+      {t: "But those who hope in the Lord will renew their strength; they will soar on wings like eagles.", r: "Isaiah 40:31"},
+      {t: "May the God of hope fill you with all joy and peace as you trust in him.", r: "Romans 15:13"},
+      {t: "For the Spirit God gave us does not make us timid, but gives us power, love and self-discipline.", r: "2 Timothy 1:7"},
+      {t: "He will cover you with his feathers, and under his wings you will find refuge.", r: "Psalm 91:4"},
+      {t: "Cast all your anxiety on him because he cares for you.", r: "1 Peter 5:7"},
+      {t: "Come to me, all you who are weary and burdened, and I will give you rest.", r: "Matthew 11:28"},
+      {t: "The Lord will keep you from all harm—he will watch over your life.", r: "Psalm 121:7-8"},
+      {t: "The Lord will fight for you; you need only to be still.", r: "Exodus 14:14"},
+      {t: "Those who seek the Lord lack no good thing.", r: "Psalm 34:10"},
+      {t: "His compassions never fail. They are new every morning; great is your faithfulness.", r: "Lamentations 3:22-23"},
+      {t: "So if the Son sets you free, you will be free indeed.", r: "John 8:36"},
+      {t: "You will keep in perfect peace those whose minds are steadfast, because they trust in you.", r: "Isaiah 26:3"},
+      {t: "The Lord is my light and my salvation—whom shall I fear?", r: "Psalm 27:1"},
+      {t: "I can do all things through Christ who strengthens me.", r: "Philippians 4:13"},
+      {t: "For the Lord is good and his love endures forever.", r: "Psalm 100:5"},
+      {t: "But seek first his kingdom and his righteousness, and all these things will be given to you as well.", r: "Matthew 6:33"},
+      {t: "If any of you lacks wisdom, you should ask God, who gives generously to all without finding fault.", r: "James 1:5"},
+      {t: "Never will I leave you; never will I forsake you.", r: "Hebrews 13:5"},
+      {t: "Cast your cares on the Lord and he will sustain you.", r: "Psalm 55:22"},
+      {t: "Commit to the Lord whatever you do, and he will establish your plans.", r: "Proverbs 16:3"},
+      {t: "But God demonstrates his own love for us in this: While we were still sinners, Christ died for us.", r: "Romans 5:8"},
+      {t: "Your word is a lamp for my feet, a light on my path.", r: "Psalm 119:105"},
+      {t: "Though the mountains be shaken and the hills be removed, yet my unfailing love for you will not be shaken.", r: "Isaiah 54:10"},
+      {t: "God is faithful; he will not let you be tempted beyond what you can bear.", r: "1 Corinthians 10:13"},
+      {t: "For he will command his angels concerning you to guard you in all your ways.", r: "Psalm 91:11"},
+      {t: "In this world you will have trouble. But take heart! I have overcome the world.", r: "John 16:33"},
+      {t: "And God is able to bless you abundantly, so that you will abound in every good work.", r: "2 Corinthians 9:8"},
+      {t: "I will instruct you and teach you in the way you should go; I will counsel you with my loving eye on you.", r: "Psalm 32:8"}
     ];
 
-    const verse = verses[Math.floor(Math.random() * verses.length)];
-    const verseEl = document.getElementById("verse");
+    const random = Math.floor(Math.random() * promises.length);
+    const verseEl = document.getElementById("verseText");
+    const refEl = document.getElementById("verseRef");
 
-    // Typing effect
+    const verse = promises[random].t;
+    const ref = promises[random].r;
+
+    // efecto de tipeo solo para el versículo
     let i = 0;
     function typeWriter() {
       if (i < verse.length) {
         verseEl.textContent += verse.charAt(i);
         i++;
-        setTimeout(typeWriter, 40); // velocidad del tipeo
+        setTimeout(typeWriter, 35);
       }
     }
-    window.onload = typeWriter;
+
+    window.onload = () => {
+      typeWriter();
+      refEl.textContent = ref;
+    };
   </script>
 </body>
 </html>
