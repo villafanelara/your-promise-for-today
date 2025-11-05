@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Your promise for today</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0b0b0b;
+      --text: #ffffff;
+      --accent: #eaeaea;
+    }
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .card {
+      text-align: center;
+      max-width: 700px;
+      width: 100%;
+      background: #111;
+      border-radius: 16px;
+      padding: 32px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+    }
+    img.image-top {
+      max-width: 160px;
+      display: block;
+      margin: 0 auto 20px;
+    }
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      margin-bottom: 20px;
+      letter-spacing: 1px;
+    }
+    .verse {
+      font-size: 1.3rem;
+      margin: 20px auto;
+      color: var(--accent);
+      font-weight: 400;
+    }
+    .ref {
+      font-size: 1rem;
+      opacity: 0.85;
+      margin-bottom: 24px;
+    }
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    button {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      border: 1px solid #333;
+      color: var(--text);
+      padding: 10px 16px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: 0.3s ease;
+    }
+    button:hover {
+      background: #222;
+    }
+    svg {
+      width: 18px;
+      height: 18px;
+      stroke: white;
+      stroke-width: 2;
+      fill: none;
+    }
+    .small {
+      font-size: 13px;
+      opacity: 0.7;
+      margin-top: 16px;
+    }
+    .share-success {
+      color: #a8f0c4;
+      margin-top: 10px;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <img src="Inicio.png" alt="Lion" class="image-top" onerror="this.style.display='none'">
+    <h1>Your promise for today</h1>
+    <div class="verse" id="verseText">Loading...</div>
+    <div class="ref" id="verseRef"></div>
+
+    <div class="controls">
+      <button id="newBtn"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 4v6h6M20 20v-6h-6M20 4l-3.5 3.5a9 9 0 00-13 7.5h2a7 7 0 0111.3-5.3L20 4z"/></svg> Next</button>
+      <button id="shareBtn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 12v7a1 1 0 001 1h14a1 1 0 001-1v-7M12 16V4m0 0l4 4m-4-4l-4 4"/></svg> Share</button>
+      <button id="copyBtn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg> Copy</button>
+    </div>
+
+    <div class="small">Each time you open or reload the page, a new promise will appear.</div>
+    <div id="msg" class="share-success"></div>
+  </div>
+
+  <script>
+    const promises = [
+      {t: "For I know the plans I have for you, declares the LORD—plans for welfare and not for evil, to give you a future and a hope.", r: "Jeremiah 29:11"},
+      {t: "I will never leave you nor forsake you.", r: "Hebrews 13:5"},
+      {t: "Cast all your anxiety on him because he cares for you.", r: "1 Peter 5:7"},
+      {t: "And my God will supply every need of yours according to his riches in glory in Christ Jesus.", r: "Philippians 4:19"},
+      {t: "Come to me, all who labor and are heavy laden, and I will give you rest.", r: "Matthew 11:28"},
+      {t: "But seek first the kingdom of God and his righteousness, and all these things will be added to you.", r: "Matthew 6:33"},
+      {t: "The LORD is my shepherd; I shall not want.", r: "Psalm 23:1"},
+      {t: "Trust in the LORD with all your heart, and do not lean on your own understanding.", r: "Proverbs 3:5"},
+      {t: "I can do all things through him who strengthens me.", r: "Philippians 4:13"},
+      {t: "The LORD will fight for you, and you have only to be silent.", r: "Exodus 14:14"},
+      {t: "He heals the brokenhearted and binds up their wounds.", r: "Psalm 147:3"},
+      {t: "You will keep in perfect peace those whose minds are steadfast, because they trust in you.", r: "Isaiah 26:3"},
+      {t: "Call to me and I will answer you, and will tell you great and hidden things that you have not known.", r: "Jeremiah 33:3"},
+      {t: "No weapon that is fashioned against you shall succeed.", r: "Isaiah 54:17"},
+      {t: "Delight yourself in the LORD, and he will give you the desires of your heart.", r: "Psalm 37:4"},
+      {t: "For God gave us a spirit not of fear but of power and love and self-control.", r: "2 Timothy 1:7"},
+      {t: "The steadfast love of the LORD never ceases; his mercies never come to an end.", r: "Lamentations 3:22"},
+      {t: "If God is for us, who can be against us?", r: "Romans 8:31"},
+      {t: "Ask, and it will be given to you; seek, and you will find; knock, and it will be opened to you.", r: "Matthew 7:7"},
+      {t: "Peace I leave with you; my peace I give to you.", r: "John 14:27"},
+      {t: "You are the light of the world.", r: "Matthew 5:14"},
+      {t: "And we know that for those who love God all things work together for good, for those who are called according to his purpose.", r: "Romans 8:28"},
+      {t: "I will be with you always, to the end of the age.", r: "Matthew 28:20"},
+      {t: "The LORD is near to the brokenhearted and saves the crushed in spirit.", r: "Psalm 34:18"},
+      {t: "Those who wait for the LORD shall renew their strength; they shall mount up with wings like eagles.", r: "Isaiah 40:31"},
+      {t: "Blessed are those who mourn, for they shall be comforted.", r: "Matthew 5:4"},
+      {t: "The LORD will guide you continually and satisfy your desire in scorched places.", r: "Isaiah 58:11"},
+      {t: "I have loved you with an everlasting love; therefore I have continued my faithfulness to you.", r: "Jeremiah 31:3"},
+      {t: "You will seek me and find me, when you seek me with all your heart.", r: "Jeremiah 29:13"},
+      {t: "Be strong and courageous. Do not be frightened, and do not be dismayed, for the LORD your God is with you wherever you go.", r: "Joshua 1:9"},
+      {t: "The LORD is my strength and my shield; in him my heart trusts.", r: "Psalm 28:7"},
+      {t: "He will cover you with his pinions, and under his wings you will find refuge.", r: "Psalm 91:4"},
+      {t: "Taste and see that the LORD is good; blessed is the man who takes refuge in him.", r: "Psalm 34:8"},
+      {t: "God is our refuge and strength, a very present help in trouble.", r: "Psalm 46:1"},
+      {t: "The LORD delights in those who fear him, who put their hope in his steadfast love.", r: "Psalm 147:11"}
+    ];
+
+    function randomVerse() {
+      const random = Math.floor(Math.random() * promises.length);
+      const item = promises[random];
+      document.getElementById('verseText').textContent = '"' + item.t + '"';
+      document.getElementById('verseRef').textContent = item.r;
+    }
+
+    randomVerse();
+
+    document.getElementById('newBtn').addEventListener('click', randomVerse);
+
+    document.getElementById('copyBtn').addEventListener('click', async () => {
+      const text = document.getElementById('verseText').textContent + ' — ' + document.getElementById('verseRef').textContent;
+      try {
+        await navigator.clipboard.writeText(text);
+        showMsg('Copied to clipboard');
+      } catch {
+        showMsg('Unable to copy');
+      }
+    });
+
+    document.getElementById('shareBtn').addEventListener('click', async () => {
+      const text = document.getElementById('verseText').textContent + '\n' + document.getElementById('verseRef').textContent;
+      if (navigator.share) {
+        try {
+          await navigator.share({ title: 'Your promise for today', text });
+          showMsg('Shared successfully');
+        } catch {
+          showMsg('Share canceled');
+        }
+      } else {
+        await navigator.clipboard.writeText(text);
+        showMsg('Link copied to clipboard');
+      }
+    });
+
+    function showMsg(message) {
+      const msgEl = document.getElementById('msg');
+      msgEl.textContent = message;
+      setTimeout(() => msgEl.textContent = '', 3000);
+    }
+  </script>
+</body>
+</html>
